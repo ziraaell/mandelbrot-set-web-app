@@ -111,7 +111,7 @@ This page allows users to generate and explore the Mandelbrot Set by adjusting p
 In addition to the existing features, after logging in, the "Load Data" button appears, allowing users to retrieve previously saved parameters for generating the Mandelbrot Set.
 
 ![image](https://github.com/user-attachments/assets/78edf6c4-ce56-423a-8747-d1e41517d081)
-![image](https://github.com/user-attachments/assets/4127dd33-e33a-45a6-871d-5926bbed9f2f)
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/4127dd33-e33a-45a6-871d-5926bbed9f2f" />
 
 
 ### Reports Display - Car Availability
