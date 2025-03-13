@@ -1,4 +1,4 @@
-# Mandelbrot Set - web app 🚗
+# Mandelbrot Set - Web App 
 Mandelbrot Set is a web application designed for interactive fractal visualization. It allows users to generate and explore the Mandelbrot set with adjustable parameters such as range and iteration count. The system includes user authentication, enabling registration, login, and saving/loading custom parameters for a personalized experience.
 
 ## Table of Contents
@@ -9,92 +9,89 @@ Mandelbrot Set is a web application designed for interactive fractal visualizati
 * [Screenshots](#screenshots)
 
 ## Technologies Used
-- Python: Main programming language used for backend development. 
-- Flask: A lightweight web framework for building the application's backend. 
-- Conda: Used for managing packages and virtual environments. 
-- PostgreSQL: Relational database system used for storing and managing data.
-- PL/pgSQL: Used for stored procedures, functions, and triggers in PostgreSQL.
-- Psycopg2: A PostgreSQL adapter for Python to handle database interactions. 
-- Jinja: Template engine for rendering HTML pages dynamically. 
-- Tembo: Cloud-based PostgreSQL hosting platform. 
-- SQL: For creating and managing the database schema and executing queries.
-- JavaScript: Used for displaying dynamic fields when adding new records.
-- HTML: For structuring the web pages.
-- CSS: For styling and layout of the web pages.
+- Node.js – JavaScript runtime environment used to run the backend of the application.
+- HTML – Used for structuring web pages.
+- CSS – For styling and layout design.
+- JavaScript – The main language used for both frontend interactivity and backend logic.
+- Express.js – A web framework for Node.js, used to handle routing and server-side logic.
+- MongoDB & Mongoose – A NoSQL database and its ODM (Object Data Modeling) library for managing application data.
+- JSON Web Token (JWT) – Used for user authentication and session management.
+- Bcrypt – A library for hashing and securely storing user passwords.
+- Cookie-Parser – Middleware for handling cookies in Express.js.
+- Dotenv – For managing environment variables securely.
 
 
 ## Features
-- Brand and Model Management: Allows storing and managing information about car brands and models, including names and associations between them. 
-- Car Inventory: Manages detailed information about each car, such as registration numbers, production years, and availability. 
-- Customer Management: Stores customer information, including names, contact details, and unique phone numbers. 
-- Employee Roles: Manages employee roles with specific permissions and salary information, ensuring proper access control. 
-- Rental Management: Supports adding new rentals, linking customers with cars and employees, and validating rental dates. 
-- Order Management: Allows customers to place orders for specific car models with start and end dates, and tracks the status of orders (successful, failed, or pending).
-- Pricing System: Manages rental pricing based on car classes, ensuring accurate cost calculations for different vehicle categories. 
-- Payment Processing: Records payments for rentals and links them to corresponding transactions, ensuring all payments are properly tracked. 
-- Reporting and Analysis: Enables generating reports on car availability, popular models, and financial performance.
-- Data Validation and Integrity: Ensures data accuracy through constraints such as unique keys, foreign keys, and checks on data formats and logical date orders. 
+- Mandelbrot Set Generation – Dynamically generates the Mandelbrot Set based on user-defined parameters.
+- Interactive Zooming – Allows users to zoom into specific regions of the fractal by selecting an area with the mouse.
+- Customizable Parameters – Users can adjust the coordinate range (x1, x2, y1, y2) and the number of iterations to control the level of detail.
+- User Authentication – Enables registration and login using JWT and bcrypt for secure authentication.
+- Saving and Loading Parameters – Logged-in users can save custom parameter settings and reload them later.
+- REST API – The backend exposes RESTful endpoints for managing user authentication, saving/loading parameters, and handling session data.
+- Dynamically Rendered UI – The frontend updates dynamically using JavaScript, without requiring full page reloads.
+- Secure Session Management – Utilizes cookies and tokens for secure authentication and authorization.
+- Sidebar Navigation – Provides easy access to different sections of the application.
 
 ## Project structure
 ```
-Car-Rental-Databases-Project/
-├── static/                  # Static files (images, CSS, JS)
-├── templates/               # HTML templates for the frontend
-├── .gitignore               
-├── BD_Dokumentacja.pdf      # Project documentation (in Polish)
+Mandelbrot-Web-App/
+├── config/                  
+├── models/                  # Database models for user authentication and history
+│   ├── User.js              # User model (authentication, account details)
+│   ├── UserHistory.js       # Model for storing user parameter history
+├── public/                  # Static files for frontend
+│   ├── css/                 # Stylesheets
+│   │   ├── style.css        # Main stylesheet for the application
+│   ├── js/                  # JavaScript logic for the frontend
+│   │   ├── views/           # Frontend views for different pages (SPA architecture)
+│   │   │   ├── AbstractView.js  # Base class for views
+│   │   │   ├── Account.js       # User account page logic
+│   │   │   ├── Info.js          # Information page
+│   │   │   ├── Login.js         # Login page logic
+│   │   │   ├── MainPage.js      # Main page logic
+│   │   │   ├── Mandelbrot.js    # Mandelbrot visualization page
+│   │   │   ├── Register.js      # Registration page logic
+│   │   ├── script.js         # Main JavaScript file
+├── index.html               # Main HTML file (entry point)
+├── .gitignore              
 ├── README.md                
-├── app.py                   # Main backend logic (Flask)
-├── baza.sql                 # SQL schema with triggers, functions, views, and initial data
-├── requirements.txt         # Python dependencies
+├── package-lock.json        
+├── package.json             
+├── server.js                # Main server file (Express backend)
 ```
 
 ## Setup
-The project requirements and dependencies are listed in the requirements.txt file, which is located in the root directory of the project.
 
 1. Clone repository
  ```bash 
-   git clone https://github.com/ziraaell/Car-Rental-Databases-Project.git
+   git clone https://github.com/ziraaell/mandelbrot-set-web-app.git
 ```
 
 2. Navigate to the project directiory:
  ```bash 
-  cd Car-Rental-Databases-Project
+  cd mandelbrot-set-web-app
 ```
 
-3. Create and activate a virtual environment using Anaconda (optional but recommended):
+3. Install dependencies
+   - Make sure you have Node.js installed. Then run:
 ```bash 
-  conda create -n rental_env
-  conda activate rental_env
+  npm install
 ```
 
-4. Install the required libraries:
+4. Set up environment variables:
+   - Create a .env file in the config directory and add:
 ```bash 
-  pip install -r requirements.txt
+  dbname = [your_database_name]
+  dbURL = [your_mongodb_connection_string]
+  ACCESS_TOKEN_SECRET = [your_secret_key]
 ```
 
-5. Create the database using the 'baza.sql' file:
-   - Ensure you have an active PostgreSQL instance. This can be hosted locally, on Tembo, or any other PostgreSQL hosting service.
-   - Run the following command to create the database structure and insert initial data:
-
-
-     ```bash 
-     psql -h [hostname] -U [username] -W -d [database_name] < baza.sql
-     ```
-
-6. Configure the .env file with database settings:
-   - Create a .env file in the root directory and add:
-
-
-     ```bash 
-     DATABASE_URL=postgresql://[username]:[password]@[hostname]:[port]/[database_name]
-     ```
-        
-7. Run the application locally:
-   ```bash 
-      flask run
-    ```
+5. Run the server
    
-  The application will be awailable at: http://127.0.0.1:5000
+     ```bash 
+     node server.js
+     ```
+The application will be available at [http://localhost:3000](http://localhost:3000)
 
 ## Screenshots
 ### Home page
@@ -109,15 +106,25 @@ This page allows users to generate and explore the Mandelbrot Set by adjusting p
 <img width="1264" alt="image" src="https://github.com/user-attachments/assets/177ff88e-3cf2-4352-93d7-54ccf671e056" />
 
 In addition to the existing features, after logging in, the "Load Data" button appears, allowing users to retrieve previously saved parameters for generating the Mandelbrot Set.
-
+<br></br>
 ![image](https://github.com/user-attachments/assets/78edf6c4-ce56-423a-8747-d1e41517d081)
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/4127dd33-e33a-45a6-871d-5926bbed9f2f" />
+
+<p align="center">
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/4127dd33-e33a-45a6-871d-5926bbed9f2f" />
+</p>
 
 
-### Reports Display - Car Availability
-Search for available cars by selecting a start and end date. 
+### Login page
 
-<img width="1264" alt="image" src="https://github.com/user-attachments/assets/6fd06c54-de13-4e06-9e14-a1a506b888fe" />
+![image](https://github.com/user-attachments/assets/420904b3-9f86-48e4-946a-bb5f5649b49c)
 
-## Available Cars Summary
-Displays the total number of available cars and a breakdown by brand. 
+Additionally, after logging in, the sidebar displays a logout icon and a user information icon, allowing users to view account details.
+<p align="center">
+  <img width="200" alt="image" src="https://github.com/user-attachments/assets/093578e9-f1e2-490f-9a09-d7eedfc47570" />
+</p>
+
+
+### Registration page
+
+![image](https://github.com/user-attachments/assets/cb22c3f3-fc17-40ec-a3db-a5ce98e2b179)
+
